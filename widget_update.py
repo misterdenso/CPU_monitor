@@ -26,5 +26,11 @@ class Configure_widgets:
         for i in self.winfo_children():
             i.destroy()
 
-    # def configure_min(self):
+    def configure_min(self):
+        r = self.cpu.cpu_one_return()
+        self.bar_one.configure(value=r)
 
+        r2 = self.cpu.mem_percent_return()
+        self.ram_bar.configure(value=r2[2])
+
+        self.wheel = self.after(1000, self.configure_min)

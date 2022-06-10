@@ -14,9 +14,13 @@ class Application(tk.Tk, Configure_widgets):
         self.resizable(False, False)
         self.title('CPU-RAM monitor')
         self.cpu = CpuBar()
+        self.run_set_ui()
+
+    def run_set_ui(self):
         self.set_ui()
         self.make_bar_cpu_usage()
         self.configure_cpu_bar()
+
 
     def set_ui(self):
         exit_but = ttk.Button(self, text='Exit', command=self.app_exit)
@@ -68,10 +72,12 @@ class Application(tk.Tk, Configure_widgets):
         self.ram_bar = ttk.Progressbar(self, length=100)
         self.ram_bar.pack(side=tk.LEFT)
 
-        ttk.Button(self, text='full', width=5).pack(side=tk.RIGHT)
-        ttk.Button(self, text='move', width=5).pack(side=tk.RIGHT)
+        ttk.Button(self, text='full', width=5, command=self.make_full_win).pack(side=tk.RIGHT)
+        ttk.Button(self, text='move', width=5, command=self.configure_win).pack(side=tk.RIGHT)
 
         self.update()
+
+        self.configure_min()
 
     def enter_mouse(self, event):
         if self.combo_win.current() == 0 or 1:
@@ -92,8 +98,15 @@ class Application(tk.Tk, Configure_widgets):
             self.update()
             self.make_minimal_win()
 
-        else:
-            pass
+
+    def make_full_win(self):
+        self.after_cancel(self.wheel)
+        self.clear_win()
+        self.update()
+        self.run_set_ui()
+        self.enter_mouse('')
+        self.combo_win.current(1)
+
 
     def app_exit(self):
         self.destroy()
