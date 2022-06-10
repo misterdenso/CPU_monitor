@@ -10,10 +10,16 @@ class CpuBar:
     def cpu_percent_return(self):
         return pt.cpu_percent(percpu=True)
 
+    def mem_percent_return(self):
+        return pt.virtual_memory()
+
+    def cpu_one_return(self):
+        return pt.cpu_percent()
+
 
 
 # x = CpuBar()
 #
-# for i in range(10):
-#     print(x.cpu_percent_return())
-#     sleep(1)
+#
+# print(x.mem_percent_return())
+
